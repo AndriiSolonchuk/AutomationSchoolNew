@@ -6,9 +6,15 @@ namespace ConsoleProject.Lessons.DateTimeMethods
     {
         public static double GetNumberOfDaysPassedFromStartDate(string startDate)
         {
-            DateTime today = DateTime.Now;
-            DateTime startDateTime = DateTime.Parse(startDate);
-            TimeSpan subtractionResult = today - startDateTime;
+            var now = DateTime.Now;
+            var startDateTime = DateTime.Parse(startDate);
+
+            if (startDateTime > now)
+            {
+                return 0;
+            }
+
+            var subtractionResult = now - startDateTime;
             return subtractionResult.TotalDays;
         }
     }
