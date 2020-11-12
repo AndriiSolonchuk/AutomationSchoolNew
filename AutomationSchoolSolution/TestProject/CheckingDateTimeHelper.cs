@@ -1,7 +1,9 @@
-﻿using ConsoleProject.Lessons.DateTimeMethods;
+﻿using System;
+using ConsoleProject.Lessons.DateTimeMethods;
 using NUnit.Framework;
 using TestStack.BDDfy;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+using TestContext = NUnit.Framework.TestContext;
 
 namespace TestProject
 {
@@ -14,18 +16,35 @@ namespace TestProject
     [TestFixture]
     public class CheckingDateTimeHelper
     {
-        private const string PastStartDate = "04 nov 2020";
-        private const string FutureStartDate = "06 nov 2020";
-
         private const string CheckNumberOfDaysForYesterday = "CheckNumberOfDaysForYesterday";
-        private double _actualResult;
+        private const string CheckNumberOfDaysForTomorrow = "CheckNumberOfDaysForTomorrow";
 
-        [TestCase(PastStartDate, CheckNumberOfDaysForYesterday, TestName = CheckNumberOfDaysForYesterday)]
-        [TestCase(FutureStartDate, "CheckNumberOfDaysForTomorrow", TestName = "CheckNumberOfDaysForTomorrow")]
-        public void CheckingGetNumberOfDaysPassedFromStartDate(string startDate, string testName)
+        private double _actualResult;
+        private string _startDate;
+
+        [SetUp]
+        public void SetUp()
         {
-            this.When(_ => ReceivingPassesDays(startDate))
-                .Then(_ => NumberOfPassedDaysShouldBeAsExpected(testName))
+            switch (TestContext.CurrentContext.Test.Name)
+            {
+                case CheckNumberOfDaysForYesterday:
+                    _startDate = DateTime.Now.AddDays(-1).ToString("F");
+                    break;
+                case "CheckNumberOfDaysForTomorrow":
+                    _startDate = DateTime.Now.AddDays(1).ToString("F");
+                    break;
+                default:
+                    Console.WriteLine("Test name is wrong");
+                    break;
+            }
+        }
+
+        [TestCase(TestName = CheckNumberOfDaysForYesterday)]
+        [TestCase(TestName = CheckNumberOfDaysForTomorrow)]
+        public void CheckingGetNumberOfDaysPassedFromStartDate()
+        {
+            this.When(_ => ReceivingPassesDays(_startDate))
+                .Then(_ => NumberOfPassedDaysShouldBeAsExpected())
                 .BDDfy();
         }
 
@@ -36,17 +55,20 @@ namespace TestProject
         }
 
         [Then]
-        public void NumberOfPassedDaysShouldBeAsExpected(string testName)
+        public void NumberOfPassedDaysShouldBeAsExpected()
         {
-            if (testName == "CheckNumberOfDaysForYesterday")
+            switch (TestContext.CurrentContext.Test.Name)
             {
-                Assert.IsTrue( _actualResult > 0 && _actualResult < 2, "_actual result is not as expected");
-            }
-            else
-            {
-                Assert.AreEqual(0, _actualResult, "actual result is wrong");
+                case CheckNumberOfDaysForYesterday:
+                    Assert.IsTrue( _actualResult > 0 && _actualResult < 2, "actual result is not as expected");
+                    break;
+                case CheckNumberOfDaysForTomorrow:
+                    Assert.AreEqual(0, _actualResult, "actual result is wrong");
+                    break;
+                default:
+                    Console.WriteLine("Test name is wrong");
+                    break;
             }
         }
-
     }
 }
