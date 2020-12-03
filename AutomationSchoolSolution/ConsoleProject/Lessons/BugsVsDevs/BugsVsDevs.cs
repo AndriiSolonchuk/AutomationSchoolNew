@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleProject.Lessons.BugsVsDevs
 {
@@ -16,7 +13,7 @@ namespace ConsoleProject.Lessons.BugsVsDevs
     {
         public static Random RandomGen = new Random();
         private readonly string _name;
-        public bool IsMotivated = false;
+        public bool IsMotivated;
         public Dev(string name)
         {
             _name = name;
@@ -72,8 +69,6 @@ namespace ConsoleProject.Lessons.BugsVsDevs
             new Bug(),
             new Bug(),
             new Bug(),
-            new Bug(),
-            new Bug(),
             new Bug()
         };
 
@@ -84,7 +79,6 @@ namespace ConsoleProject.Lessons.BugsVsDevs
             new Dev("Viktoria"),
             new Dev("Itay")
         };
-
 
         public void StartGame()
         {
@@ -104,7 +98,7 @@ namespace ConsoleProject.Lessons.BugsVsDevs
             }
             else
             {
-                Console.WriteLine("Dev wins! there are no bugs left!");
+                Console.WriteLine("Devs win! there are no bugs left!");
             }
         }
     }
