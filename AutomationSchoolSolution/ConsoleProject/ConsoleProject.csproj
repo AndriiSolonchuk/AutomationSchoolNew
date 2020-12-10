@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Lessons\BugsVsDevs\BugsVsDevs.cs" />
     <Compile Include="Lessons\DateTimeMethods\DateTimeHelper.cs" />
+    <Compile Include="Lessons\LINQ\ExamplesOfLinq.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

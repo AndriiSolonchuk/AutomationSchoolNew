@@ -1,5 +1,6 @@
 ﻿using System;
 using ConsoleProject.Lessons.BugsVsDevs;
+using ConsoleProject.Lessons.LINQ;
 
 namespace ConsoleProject
 {
@@ -7,8 +8,7 @@ namespace ConsoleProject
     {
         static void Main(string[] args)
         {
-            BugsVsDevs game = new BugsVsDevs();
-            game.StartGame();
+            ExamplesOfLinq.GetExamples();
             Console.ReadLine();
         }
     }
